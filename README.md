@@ -1,50 +1,16 @@
-# Repo Name 
+# Klaviyo agent skills
 
-What does your repo do
+Skills that help coding agents build on Klaviyo's API and MCP server. Each directory under
+`skills/` is one skill in the [Agent Skills](https://agentskills.io/specification) format.
 
-## Important disclaimer
-All code samples in this repository show examples of how to accomplish certain use cases. We will use our best effort to maintain these examples, but occasionally some items may break. If you notice a broken code sample, please open an issue to let us know something is broken, or alternatively submit a PR with a proposed fix.
+| Skill | What it does |
+|---|---|
+| `klaviyo-new-oauth` | Sets up a new OAuth app and its authorization flow |
+| `klaviyo-migrate-oauth` | Moves an existing integration from API keys to OAuth |
+| `klaviyo-product-data-model` | Models a B2B product (accounts, seats and usage events) as Klaviyo custom objects, segments and draft flows, then creates it through the Klaviyo MCP |
+| `klaviyo-product-friction-analytics` | Sends product friction events to Klaviyo and charts them |
 
-## Version
+## About this repository
 
-* SDK type & version number
-* API revision
-
-## What you'll learn
-
-* feature1
-* feature2
-
-## Limitations
-
-* limitation1
-* limitation2
-
-## Klaviyo features + endpoints used
-
-* feature1 : description1
-* feature2 : description2
-
-## Installation
-
-* step1
-* step2
-
-## Testing
-
-* step1
-* step2
-
-## Usage
-
-Example usage here
-
-## FAQ
-
-Q: Question1?
-
-A: Answer1.
-
-
-
-
+This repository is a read-only mirror, published automatically from an internal repository. Changes
+made here are overwritten. To report a problem or suggest a change, open an issue.
