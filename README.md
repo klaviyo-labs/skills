@@ -1,18 +1,33 @@
-# Klaviyo agent skills
+# Klaviyo Agent Skills
 
-Skills that help coding agents build on Klaviyo's API and MCP server. Each directory under
-`skills/` is one skill in the [Agent Skills](https://agentskills.io/specification) format.
+Skills that give a coding agent the context it needs to work with Klaviyo's API and MCP server. Each
+directory under `skills/` is one skill in the [Agent Skills](https://agentskills.io/specification)
+format.
 
-| Skill | What it does |
-|---|---|
-| `klaviyo-new-oauth` | Sets up a new OAuth app and its authorization flow |
-| `klaviyo-migrate-oauth` | Moves an existing integration from API keys to OAuth |
+## Installation
 
-## Experimental skills
+Install any skill by name:
 
-[`experimental/`](experimental) holds skills that are still being proven out. They are best-effort and
-not officially supported, and are not part of the default set: installing from Klaviyo's developer
-site skips them. Install one by name, for example `npx skills add klaviyo-labs/skills --skill <name>`.
+```sh
+npx skills add klaviyo-labs/skills --skill <name>
+```
+
+## Available Skills
+
+Supported skills live in [`skills/`](./skills/):
+
+- **klaviyo-new-oauth** — Set up a new OAuth app and its authorization flow.
+- **klaviyo-migrate-oauth** — Move an existing integration from API keys to OAuth.
+
+## Experimental Skills
+
+[`experimental/`](./experimental/) holds skills we are still developing. Treat them as previews:
+
+- We don't commit to supporting them, and they get less review and testing than the skills in
+  [`skills/`](./skills/).
+- Klaviyo's developer site leaves them out of its skill index, so installing from the site doesn't
+  include them. Install one by name, as above.
+- [`experimental/README.md`](./experimental/README.md) lists them and explains what to expect.
 
 ## About this repository
 
