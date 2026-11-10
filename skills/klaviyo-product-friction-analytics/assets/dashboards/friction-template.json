@@ -1,0 +1,510 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Count of workflow-started events in the selected window.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "text", "value": null }]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["sum"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Attempts",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["attempts"] } } }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Count of workflow-error events in the selected window.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "red" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "red", "value": null }]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["sum"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["errors"] } } }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Count of workflow-completed events in the selected window.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "green" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["sum"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Completed",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["completed"] } } }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Distinct profiles that hit at least one error. This is the 'who is affected' number.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "orange" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "orange", "value": null }]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Affected users",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["affected_users"] } } }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Errors divided by attempts across the whole window. Computed in the source query, not here.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.1 },
+              { "color": "red", "value": 0.25 }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 4 },
+      "id": 5,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Error rate",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["overall_error_rate"] } } }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Completions divided by attempts across the whole window. Aggregate ratio, not an ordered funnel.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "green", "value": 0.8 }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 4 },
+      "id": 6,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Completion rate",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["overall_completion_rate"] } } }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Mean latency_ms on error events. Separates 'broken' from 'slow'.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "text", "value": null }]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 4 },
+      "id": 7,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Avg error latency",
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "include": { "names": ["avg_latency_ms"] } } }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Which failure mode dominates. Requires a closed set of reason values.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "continuous-BlYlRd" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "text", "value": null }]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 4 },
+      "id": 9,
+      "options": {
+        "displayMode": "gradient",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": true },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 51,
+          "refId": "A"
+        }
+      ],
+      "title": "Failure reasons",
+      "type": "bargauge"
+    },
+    {
+      "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+      "description": "Daily attempts, errors, and completions. Buckets are UTC calendar days from the event timestamp.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "lineWidth": 1,
+            "scaleDistribution": { "type": "linear" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "text", "value": null }]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 9, "w": 15, "x": 0, "y": 9 },
+      "id": 8,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.7,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
+      },
+      "targets": [
+        {
+          "datasource": { "type": "datasource", "uid": "-- Dashboard --" },
+          "panelId": 50,
+          "refId": "A"
+        }
+      ],
+      "title": "Attempts, errors, and completions by day",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": { "include": { "names": ["day", "attempts", "errors", "completed"] } }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "gridPos": { "h": 9, "w": 9, "x": 15, "y": 9 },
+      "id": 10,
+      "options": {
+        "code": { "language": "plaintext", "showLineNumbers": false, "showMiniMap": false },
+        "content": "## Setup\n\nSet these four dashboard variables before anything renders:\n\n- `metric_started`, `metric_error`, `metric_completed` — Klaviyo metric **IDs**, not names. Get them with `scripts/list-metrics.sh`.\n- `event_source` — the `source` property your app sends, e.g. `website`.\n\nA metric does not exist until its first event fires, so run one real journey first.\n\n## How to read this\n\n**Error rate** and **completion rate** are computed across the whole window in the source query. **Affected users** counts distinct profiles with at least one error — that is the list worth acting on.\n\nDrill into a specific failure by querying Get Events for the `session_id` of an affected profile.\n\n## Limits\n\n- Reads the newest **1,000 events** per window with no truncation warning. Long windows silently under-count.\n- Stage ratios are **aggregate comparisons, not ordered funnels**. A user counted in Completed did not necessarily appear in Attempts within this window.\n- Refresh is 30s polling plus Klaviyo processing delay.\n- No session replay, stack traces, or error grouping.\n\n## Adding panels\n\nPoint new panels at source panel **50** or **51** via the `-- Dashboard --` data source. Do not add a new upstream query per panel — concurrent aggregate queries return HTTP 429.",
+        "mode": "markdown"
+      },
+      "title": "How to read this",
+      "type": "text"
+    },
+    {
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "klaviyo-api" },
+      "description": "Shared source query. One Klaviyo API call feeding every rollup panel above. Aggregation happens in JSONata because Query Metric Aggregates cannot group by arbitrary event properties.",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 18 },
+      "id": 50,
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "countRows": false, "fields": "", "reducer": ["sum"], "show": false },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "klaviyo-api" },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "( $mStart := \"${metric_started}\"; $mError := \"${metric_error}\"; $mDone := \"${metric_completed}\"; $src := \"${event_source}\"; $events := data[(relationships.metric.data.id = $mStart or relationships.metric.data.id = $mError or relationships.metric.data.id = $mDone) and attributes.event_properties.source = $src]; $count($events) = 0 ? [] : ( $starts := $events[relationships.metric.data.id = $mStart]; $errors := $events[relationships.metric.data.id = $mError]; $dones := $events[relationships.metric.data.id = $mDone]; $errorRate := $count($starts) = 0 ? 0 : $count($errors) / $count($starts); $completionRate := $count($starts) = 0 ? 0 : $count($dones) / $count($starts); $affected := $count($distinct($errors.relationships.profile.data.id)); $latencies := $errors.attributes.event_properties.latency_ms; $avgLatency := $count($latencies) = 0 ? 0 : $average($latencies); $days := $sort([$distinct($map($events, function($e) { $substring($e.attributes.datetime, 0, 10) }))]); [$map($days, function($d) {( $day := $events[$substring(attributes.datetime, 0, 10) = $d]; { \"day\": $d, \"attempts\": $count($day[relationships.metric.data.id = $mStart]), \"errors\": $count($day[relationships.metric.data.id = $mError]), \"completed\": $count($day[relationships.metric.data.id = $mDone]), \"affected_users\": $affected, \"overall_error_rate\": $errorRate, \"overall_completion_rate\": $completionRate, \"avg_latency_ms\": $avgLatency } )})] ) )",
+          "source": "url",
+          "type": "json",
+          "url": "https://a.klaviyo.com/api/events/?filter=and(greater-or-equal(datetime,${__from:date:iso}),less-than(datetime,${__to:date:iso}))&page%5Bsize%5D=1000&sort=-datetime",
+          "url_options": { "data": "", "method": "GET" }
+        }
+      ],
+      "title": "Source — workflow rollup (shared)",
+      "type": "table"
+    },
+    {
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "klaviyo-api" },
+      "description": "Shared source query for the failure-reason distribution. Second and final upstream call per refresh.",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 18 },
+      "id": 51,
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "countRows": false, "fields": "", "reducer": ["sum"], "show": false },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "klaviyo-api" },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "( $mError := \"${metric_error}\"; $src := \"${event_source}\"; $errors := data[relationships.metric.data.id = $mError and attributes.event_properties.source = $src]; $count($errors) = 0 ? [] : ( $reasons := [$distinct($errors.attributes.event_properties.reason)]; [$map($reasons, function($r) {{ \"reason\": $r, \"count\": $count($errors[attributes.event_properties.reason = $r]) }})] ) )",
+          "source": "url",
+          "type": "json",
+          "url": "https://a.klaviyo.com/api/events/?filter=and(greater-or-equal(datetime,${__from:date:iso}),less-than(datetime,${__to:date:iso}))&page%5Bsize%5D=1000&sort=-datetime",
+          "url_options": { "data": "", "method": "GET" }
+        }
+      ],
+      "title": "Source — failure reasons (shared)",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "refresh": "30s",
+  "schemaVersion": 41,
+  "tags": ["product-analytics", "klaviyo"],
+  "templating": {
+    "list": [
+      {
+        "current": { "text": "SET_ME", "value": "SET_ME" },
+        "description": "Klaviyo metric ID for the workflow-started event",
+        "hide": 0,
+        "label": "Metric ID — Started",
+        "name": "metric_started",
+        "options": [{ "selected": true, "text": "SET_ME", "value": "SET_ME" }],
+        "query": "SET_ME",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": { "text": "SET_ME", "value": "SET_ME" },
+        "description": "Klaviyo metric ID for the workflow-error event",
+        "hide": 0,
+        "label": "Metric ID — Error",
+        "name": "metric_error",
+        "options": [{ "selected": true, "text": "SET_ME", "value": "SET_ME" }],
+        "query": "SET_ME",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": { "text": "SET_ME", "value": "SET_ME" },
+        "description": "Klaviyo metric ID for the workflow-completed event",
+        "hide": 0,
+        "label": "Metric ID — Completed",
+        "name": "metric_completed",
+        "options": [{ "selected": true, "text": "SET_ME", "value": "SET_ME" }],
+        "query": "SET_ME",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": { "text": "website", "value": "website" },
+        "description": "Value of the source event property to include",
+        "hide": 0,
+        "label": "Event source",
+        "name": "event_source",
+        "options": [{ "selected": true, "text": "website", "value": "website" }],
+        "query": "website",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": { "from": "now-7d", "to": "now" },
+  "timepicker": {
+    "refresh_intervals": ["30s", "1m", "5m", "15m", "1h"]
+  },
+  "timezone": "utc",
+  "title": "Product Friction Investigator",
+  "uid": "product-friction",
+  "version": 1,
+  "weekStart": ""
+}
