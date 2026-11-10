@@ -66,22 +66,24 @@ Then create the app one of two ways. Either way, **never ask the user to paste t
 Klaviyo's Create Application endpoint is in **beta** (revision `2026-10-15.pre`), so tell the user that before you use it. It needs a **private API key with the `applications:write` scope** from the account that will own the app.
 
 1. Ask the user to set the key in their shell, not in the chat: `export KLAVIYO_API_KEY=pk_...`. If they don't have one with `applications:write`, use Option B.
-2. Run `scripts/create-oauth-app.mjs` (Node 18+, no dependencies) from the project root:
+2. Show the user the exact title, redirect URIs and scopes you're about to create the app with, and wait for their approval: creating it makes a real app on their account, and a wrong inferred value is easier to fix before than after.
+3. Run the skill's `scripts/create-oauth-app.mjs` (Node 18+, no dependencies) by its path in the skill's install directory, and point `--env` at the `.env` in the user's project root, because the script writes to `./.env` of wherever it runs:
    ```bash
-   node create-oauth-app.mjs \
+   node <skill-dir>/scripts/create-oauth-app.mjs \
+     --env <project-root>/.env \
      --title "<app title>" \
      --redirect-uri http://localhost:3001/api/auth/callback \
      --scopes "accounts:read lists:read profiles:write events:write"
    ```
    For several redirect URIs, separate them with commas.
-3. The script:
+4. The script:
    - generates a throwaway RSA key pair and sends only its public half
    - calls `POST https://a.klaviyo.com/api/applications` with the title, redirect URIs and scopes
    - decrypts the client secret Klaviyo returns (encrypted to that key, and returned only once)
    - writes `KLAVIYO_CLIENT_ID`, `KLAVIYO_CLIENT_SECRET` and `KLAVIYO_REDIRECT_URI` to `.env`, readable only by its owner
 
    It prints the app's ID and client ID, never the secret.
-4. If it fails, show the user the error it prints. A `403` usually means the key lacks `applications:write`. If the app was created but the secret couldn't be decrypted, the app must be deleted and created again, because the secret can't be fetched a second time.
+5. If it fails, show the user the error it prints. A `403` usually means the key lacks `applications:write`. If the app was created but the secret couldn't be decrypted, have the user generate a new client secret for that app in the UI (the app and its settings are kept); delete and create the app again only if they can't, because the secret can't be fetched a second time.
 
 The app starts as a **draft**: it works for the account that owns it, which is all local development needs. Listing it on the Klaviyo marketplace is a separate review.
 
@@ -109,7 +111,7 @@ Then:
 
 > **Note on redirect URIs**: Klaviyo also allows installation from its own marketplace — meaning the redirect must work from `klaviyo.com` subdomains too, not just your own domain. For local dev this doesn't apply, but flag it for production.
 
-Check that both values are set without printing them, for example `grep -cE '^KLAVIYO_CLIENT_(ID|SECRET)=.+' .env` should print `2`. Do not proceed until both are set.
+Check that both values are set without printing them: `grep -cE '^KLAVIYO_CLIENT_ID=.+' .env` and `grep -cE '^KLAVIYO_CLIENT_SECRET=.+' .env` should each print `1`. Count the keys separately, not with one `KLAVIYO_CLIENT_(ID|SECRET)` pattern: that counts matching lines, so two `CLIENT_ID` lines and no `CLIENT_SECRET` also print `2`. Do not proceed until both are set, each exactly once.
 
 Remind the user: never hardcode these values in source files.
 

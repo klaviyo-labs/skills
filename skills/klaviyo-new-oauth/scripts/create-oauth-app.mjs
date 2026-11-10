@@ -2,11 +2,15 @@
 // Creates a Klaviyo OAuth app through the beta Create Application API and writes its client ID and
 // client secret into .env, without printing the secret.
 //
-//   KLAVIYO_API_KEY=pk_... node create-oauth-app.mjs \
+//   KLAVIYO_API_KEY=pk_... node <skill-dir>/scripts/create-oauth-app.mjs \
+//     --env <project-root>/.env \
 //     --title "My integration" \
 //     --redirect-uri http://localhost:3001/api/auth/callback \
 //     --scopes "accounts:read profiles:read" \
-//     [--description "..."] [--env .env]
+//     [--description "..."]
+//
+// --env defaults to ./.env in the current directory, so pass the project's .env when running the
+// script from the skill's own directory.
 //
 // KLAVIYO_API_KEY must be a private key with the applications:write scope. The script generates
 // a throwaway RSA key pair, sends only the public half, and decrypts the returned client secret
@@ -20,7 +24,17 @@ import {
   privateDecrypt,
   constants,
 } from 'node:crypto';
-import { chmodSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
+import {
+  accessSync,
+  chmodSync,
+  constants as fsConstants,
+  existsSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { dirname, join } from 'node:path';
 
 const API_URL = 'https://a.klaviyo.com/api/applications';
 // Create Application is beta, so it needs the beta revision.
@@ -46,6 +60,12 @@ if (!apiKey) usage('Set KLAVIYO_API_KEY to a private key with applications:write
 if (!title) usage('--title is required.');
 if (redirectUris.length === 0) usage('--redirect-uri is required.');
 if (!scopes) usage('--scopes is required, e.g. "accounts:read profiles:read".');
+// Klaviyo returns the client secret once, so fail before creating the app if it can't be saved.
+try {
+  accessSync(dirname(envPath), fsConstants.W_OK);
+} catch {
+  usage(`Can't write to ${envPath}: its directory doesn't exist or isn't writable.`);
+}
 
 const b64url = (value) => Buffer.from(value, 'base64url');
 
@@ -80,9 +100,21 @@ const writeEnv = (path, values) => {
       ? text.replace(pattern, () => line)
       : `${text}${separator}${line}\n`;
   }
-  writeFileSync(path, text);
-  // Only its owner should read a file holding a client secret; `mode` above would apply only to a
-  // file this creates, so an existing .env is narrowed here too.
+  // A file created at a default 0644 umask is readable by other local users until `chmodSync` below,
+  // and a write that fails partway would truncate an existing .env. Write a private temporary file
+  // beside it and rename it over the target, so the secret is never world-readable and the old file
+  // survives a failed write. `wx` makes the create exclusive, so a leftover or planted file at that
+  // name fails the write instead of being reused, and `mode` applies because the file is always new.
+  const temporary = join(dirname(path), `.env.${process.pid}.tmp`);
+  try {
+    writeFileSync(temporary, text, { mode: 0o600, flag: 'wx' });
+    renameSync(temporary, path);
+  } catch (error) {
+    rmSync(temporary, { force: true });
+    throw error;
+  }
+  // `renameSync` keeps the temporary file's mode, and an existing .env replaced this way keeps it
+  // too; narrow explicitly for a target that already existed.
   chmodSync(path, 0o600);
 };
 
@@ -128,7 +160,9 @@ try {
 } catch (error) {
   console.error(`The app was created (id ${id}), but its client secret couldn't be decrypted:`);
   console.error(error.message);
-  console.error('Klaviyo returns the secret only once: delete this app and create it again.');
+  console.error(
+    'Klaviyo returns the secret only once: generate a new client secret for this app in the UI.',
+  );
   process.exit(1);
 }
 
