@@ -1,0 +1,14 @@
+apiVersion: 1
+
+providers:
+  - name: Product friction
+    orgId: 1
+    folder: Product Analytics
+    folderUid: product-analytics
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards
+      foldersFromFilesStructure: false
