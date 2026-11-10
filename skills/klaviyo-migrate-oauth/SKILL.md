@@ -81,7 +81,7 @@ Tell the user to complete these steps in the Klaviyo UI **before you change any 
    KLAVIYO_REDIRECT_URI=http://localhost:3001/api/auth/callback
    ```
 2. Ask the user to paste their **Client ID** and **Client Secret** into `.env` themselves, then tell you when they're done.
-3. Check that both values are set without printing them, for example `grep -cE '^KLAVIYO_CLIENT_(ID|SECRET)=.+' .env` should print `2`.
+3. Check that both values are set without printing them: `grep -cE '^KLAVIYO_CLIENT_ID=.+' .env` and `grep -cE '^KLAVIYO_CLIENT_SECRET=.+' .env` should each print `1`. Count the keys separately: one `KLAVIYO_CLIENT_(ID|SECRET)` pattern counts matching lines, so duplicates of one key pass for the other. Also run `grep -c '^KLAVIYO_CLIENT_ID=' .env` and `grep -c '^KLAVIYO_CLIENT_SECRET=' .env`, which count empty assignments too; each must print `1`, because dotenv loads the last assignment and a trailing empty one would blank the value. If either prints more, ask the user to remove the duplicates.
 
 Do not proceed until both values are set.
 
