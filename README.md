@@ -18,6 +18,10 @@ Supported skills live in [`skills/`](./skills/):
 
 - **klaviyo-new-oauth** — Set up a new OAuth app and its authorization flow.
 - **klaviyo-migrate-oauth** — Move an existing integration from API keys to OAuth.
+- **klaviyo-vercel-shop** — Add Klaviyo to a Vercel Shop (Next.js and Shopify) storefront: consent-gated onsite tracking, a signup form, back-in-stock alerts, customer identification, a welcome flow and event verification.
+- **klaviyo-vercel-shop-agent** — Let a Vercel Shop storefront's Shop Agent sign shoppers up for back-in-stock alerts through a Klaviyo agent tool, and record agent usage for segmentation.
+- **klaviyo-onsite-forms** — Create, edit, publish and unpublish a Klaviyo popup, flyout or embedded form on a headless storefront, targeted only to that storefront's hosts.
+- **klaviyo-store-analytics** — Answer storefront performance questions through the Klaviyo MCP server, and build segments, templates and campaigns as drafts a person reviews and sends.
 
 ## Experimental Skills
 
